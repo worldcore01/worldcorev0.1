@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>WORLD CORE — Crypto Exchange</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0e11;
+      color: #f5f5f5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: #0b0e11;
+      border-bottom: 1px solid #24282d;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    .logo {
+      width: 35px;
+      height: 35px;
+      background: #f0b90b;
+      color: #0b0e11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      transform: rotate(45deg);
+      border-radius: 5px;
+    }
+
+    .logo span {
+      transform: rotate(-45deg);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      margin-left: 25px;
+      flex: 1;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: #eaecef;
+    }
+
+    .nav-links a:hover {
+      color: #f0b90b;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .login {
+      padding: 10px 17px;
+      border-radius: 7px;
+      background: transparent;
+      border: 1px solid #454a51;
+      color: white;
+      cursor: pointer;
+    }
+
+    .signup {
+      padding: 10px 17px;
+      border-radius: 7px;
+      background: #f0b90b;
+      border: none;
+      color: #111;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 92px 20px 70px;
+      background:
+        radial-gradient(circle at center top, rgba(240,185,11,.13), transparent 42%);
+    }
+
+    .hero h1 {
+      font-size: clamp(43px, 7vw, 76px);
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -3px;
+    }
+
+    .hero h1 span {
+      color: #f0b90b;
+    }
+
+    .hero p {
+      margin: 25px auto;
+      max-width: 650px;
+      color: #aeb4bc;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .primary {
+      background: #f0b90b;
+      color: #111;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 7px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .secondary {
+      background: #181c20;
+      color: white;
+      border: 1px solid #353a40;
+      padding: 15px 30px;
+      border-radius: 7px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      max-width: 1100px;
+      margin: 0 auto 70px;
+      padding: 0 20px;
+    }
+
+    .stat {
+      background: #11151a;
+      border: 1px solid #262b31;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    .stat h2 {
+      font-size: 26px;
+      margin-bottom: 7px;
+    }
+
+    .stat p {
+      color: #8f969f;
+      font-size: 13px;
+    }
+
+    /* MARKETS */
+    .section {
+      max-width: 1150px;
+      margin: auto;
+      padding: 0 20px 75px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .section-title h2 {
+      font-size: 27px;
+    }
+
+    .view {
+      color: #f0b90b;
+      font-size: 14px;
+    }
+
+    .markets {
+      overflow-x: auto;
+      background: #11151a;
+      border: 1px solid #272c32;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+    }
+
+    th {
+      color: #8f969f;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: right;
+      padding: 18px;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    td {
+      padding: 19px 18px;
+      border-top: 1px solid #24292f;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .coin {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 700;
+    }
+
+    .coin-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #252a30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f0b90b;
+      font-weight: 800;
+    }
+
+    .green {
+      color: #0ecb81;
+    }
+
+    .red {
+      color: #f6465d;
+    }
+
+    /* FEATURES */
+    .features {
+      max-width: 1150px;
+      margin: auto;
+      padding: 20px 20px 90px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 45px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature {
+      background: #11151a;
+      border: 1px solid #272c32;
+      padding: 32px;
+      border-radius: 12px;
+      transition: .2s;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      border-color: #f0b90b;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 9px;
+      background: rgba(240,185,11,.12);
+      color: #f0b90b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 23px;
+      margin-bottom: 20px;
+    }
+
+    .feature h3 {
+      margin-bottom: 12px;
+    }
+
+    .feature p {
+      color: #9299a2;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      padding: 80px 20px;
+      background: #11151a;
+      border-top: 1px solid #272c32;
+      border-bottom: 1px solid #272c32;
+    }
+
+    .cta h2 {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .cta p {
+      color: #969da5;
+      margin-bottom: 28px;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 50px 25px 30px;
+      background: #080a0d;
+    }
+
+    .footer-grid {
+      max-width: 1150px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 35px;
+    }
+
+    footer h3 {
+      margin-bottom: 17px;
+    }
+
+    footer a {
+      display: block;
+      color: #8d949d;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    footer a:hover {
+      color: #f0b90b;
+    }
+
+    .copyright {
+      max-width: 1150px;
+      margin: 45px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #24282d;
+      color: #666d75;
+      font-size: 12px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .navbar {
+        padding: 0 15px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding-top: 65px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-right .login {
+        display: none;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+
+    <a href="#" class="brand">
+      <div class="logo"><span>W</span></div>
+      WORLD CORE
+    </a>
+
+    <div class="nav-links">
+      <a href="#markets">Markets</a>
+      <a href="#trade">Trade</a>
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+    </div>
+
+    <div class="nav-right">
+      <button class="login" onclick="alert('Login system coming soon')">
+        Log In
+      </button>
+
+      <button class="signup" onclick="alert('Registration system coming soon')">
+        Sign Up
+      </button>
+    </div>
+
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <h1>
+      The World of<br>
+      <span>Crypto Starts Here.</span>
+    </h1>
+
+    <p>
+      WORLD CORE is a modern digital asset platform built
+      for simple, fast and secure crypto experiences.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="primary" onclick="startTrading()">
+        Start Trading
+      </button>
+
+      <button class="secondary" onclick="exploreMarkets()">
+        Explore Markets
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- STATS -->
+  <section class="stats">
+
+    <div class="stat">
+      <h2>$12.8B+</h2>
+      <p>24h Trading Volume</p>
+    </div>
+
+    <div class="stat">
+      <h2>2.4M+</h2>
+      <p>Registered Users</p>
+    </div>
+
+    <div class="stat">
+      <h2>180+</h2>
+      <p>Digital Assets</p>
+    </div>
+
+    <div class="stat">
+      <h2>99.99%</h2>
+      <p>Platform Uptime</p>
+    </div>
+
+  </section>
+
+
+  <!-- MARKETS -->
+  <section class="section" id="markets">
+
+    <div class="section-title">
+      <h2>Markets</h2>
+      <a class="view" href="#">View All Markets →</a>
+    </div>
+
+    <div class="markets">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Trading Pair</th>
+            <th>Last Price</th>
+            <th>24h Change</th>
+            <th>24h High</th>
+            <th>24h Low</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>
+              <div class="coin">
+                <div class="coin-icon">₿</div>
+                BTC / USDT
+              </div>
+            </td>
+
+            <td>$67,842.31</td>
+            <td class="green">+2.84%</td>
+            <td>$68,901.20</td>
+            <td>$65,420.15</td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="coin">
+                <div class="coin-icon">Ξ</div>
+                ETH / USDT
+              </div>
+            </td>
+
+            <td>$3,842.55</td>
+            <td class="green">+1.72%</td>
+            <td>$3,920.12</td>
+            <td>$3,701.20</td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="coin">
+                <div class="coin-icon">S</div>
+                SOL / USDT
+              </div>
+            </td>
+
+            <td>$154.82</td>
+            <td class="red">-0.93%</td>
+            <td>$160.41</td>
+            <td>$151.90</td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="coin">
+                <div class="coin-icon">W</div>
+                WCORE / USDT
+              </div>
+            </td>
+
+            <td>$1.0000</td>
+            <td class="green">+4.21%</td>
+            <td>$1.08</td>
+            <td>$0.94</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+
+    <h2>Built for the New Digital Economy</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+
+        <div class="feature-icon">⚡</div>
+
+        <h3>Fast Trading</h3>
+
+        <p>
+          A responsive trading experience designed
+          for fast order execution and market monitoring.
+        </p>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div class="feature-icon">🔐</div>
+
+        <h3>Security First</h3>
+
+        <p>
+          Designed with modern security architecture
+          and account protection features in mind.
+        </p>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div class="feature-icon">🌎</div>
+
+        <h3>Global Access</h3>
+
+        <p>
+          Access your digital-asset dashboard from
+          desktop, tablet and mobile devices.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="cta" id="trade">
+
+    <h2>Enter the WORLD CORE</h2>
+
+    <p>
+      Create your account and explore the digital asset ecosystem.
+    </p>
+
+    <button class="primary" onclick="startTrading()">
+      Create Free Account
+    </button>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer id="about">
+
+    <div class="footer-grid">
+
+      <div>
+        <div class="brand">
+          <div class="logo"><span>W</span></div>
+          WORLD CORE
+        </div>
+
+        <p style="color:#777; margin-top:15px; line-height:1.6;">
+          A next-generation digital asset platform.
+        </p>
+      </div>
+
+      <div>
+        <h3>Platform</h3>
+        <a href="#markets">Markets</a>
+        <a href="#trade">Trading</a>
+        <a href="#">Fees</a>
+        <a href="#">API</a>
+      </div>
+
+      <div>
+        <h3>Company</h3>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Announcements</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <div>
+        <h3>Support</h3>
+        <a href="#">Help Center</a>
+        <a href="#">Security</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 WORLD CORE. Demo interface — not affiliated with Binance.
+    </div>
+
+  </footer>
+
+
+  <script>
+
+    function startTrading() {
+      alert("WORLD CORE trading interface coming soon.");
+    }
+
+    function exploreMarkets() {
+      document
+        .getElementById("markets")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+    }
+
+  </script>
+
+</body>
+</html>
